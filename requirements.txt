@@ -1,0 +1,42 @@
+# ===================================================================
+# AI Document Assistant - Dependencies
+# Tested compatible version set (Python 3.10+)
+# ===================================================================
+
+# --- Frontend ---
+streamlit==1.38.0
+
+# --- LangChain core + integrations ---
+langchain==0.3.7
+langchain-community==0.3.5
+langchain-core==0.3.15
+langchain-text-splitters==0.3.2
+langchain-openai==0.2.6
+langchain-google-genai==2.0.4
+langchain-chroma==0.1.4
+
+# --- Vector Database ---
+chromadb==0.5.18
+
+# --- Embeddings ---
+sentence-transformers==3.2.1
+
+# --- LLM SDKs (used directly for token/cost estimation + fallback calls) ---
+openai==1.54.4
+google-generativeai==0.8.3
+
+# --- PDF Extraction & OCR ---
+PyMuPDF==1.24.13
+pytesseract==0.3.13
+Pillow==10.4.0
+
+# --- Configuration ---
+python-dotenv==1.0.1
+
+# --- Utilities ---
+tiktoken==0.8.0
+pandas==2.2.3
+numpy==1.26.4
+
+# --- Translation (bonus feature) ---
+deep-translator==1.11.4

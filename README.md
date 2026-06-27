@@ -1,107 +1,363 @@
 # 🧠 AI Document Assistant
 
-A production-quality RAG (Retrieval-Augmented Generation) application built with **Streamlit**, **LangChain**, **ChromaDB**, and **sentence-transformers**. Upload PDFs or paste text, ask questions, and get accurate answers grounded in your documents — with page-level citations and confidence scores.
+<p align="center">
 
-## ✨ Features
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-red?logo=streamlit)
+![LangChain](https://img.shields.io/badge/LangChain-RAG-green)
+![Gemini](https://img.shields.io/badge/Google-Gemini_API-blue?logo=google)
+![ChromaDB](https://img.shields.io/badge/Vector%20Database-ChromaDB-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-- Multi-PDF upload (drag & drop) and paste-text input
-- OCR fallback for scanned/image-only PDFs (requires Tesseract)
-- Chunking via `RecursiveCharacterTextSplitter` (1000 chars / 200 overlap)
-- Local embeddings via `sentence-transformers/all-MiniLM-L6-v2` (no API cost)
-- Persistent vector storage in ChromaDB with duplicate-embedding prevention
-- Chat interface with conversation history, source citations, page numbers, and confidence scores
-- Copy / download answers, export full chat as Markdown or JSON
-- Supports both **OpenAI** and **Google Gemini** as the LLM backend
-- Bonus tools: document summary, key points, quiz generator, flashcards, answer translation, keyword search, token usage & estimated cost tracking
-- Clear database / delete individual documents
-- Dark-mode compatible UI
+</p>
 
-## 📁 Project Structure
+A production-ready **Retrieval-Augmented Generation (RAG)** application built with **Streamlit**, **LangChain**, **Google Gemini**, **ChromaDB**, and **Sentence Transformers**. Upload PDF documents or paste text, then interact with your knowledge base through a conversational AI interface that provides **context-aware answers**, **source citations**, **page references**, and **confidence scores**.
 
+---
+
+## 🚀 Live Demo
+
+🌐 **Try the application**
+
+https://ai-assistant-alk4f2bdikbrxmvwchbcq9.streamlit.app/
+
+---
+
+## 📸 Preview
+
+> Add screenshots after uploading them to an `assets/` folder.
+
+```text
+assets/
+├── home.png
+├── upload.png
+├── chat.png
+└── settings.png
 ```
+
+```markdown
+![Home](assets/home.png)
+
+![Chat](assets/chat.png)
+```
+
+---
+
+# ✨ Features
+
+### 📄 Document Processing
+
+* Upload multiple PDF documents
+* Paste custom text for indexing
+* OCR support for scanned PDFs using Tesseract
+* Automatic text extraction with PyMuPDF
+
+### 🧠 Retrieval-Augmented Generation (RAG)
+
+* Recursive text chunking
+* Semantic embeddings using **all-MiniLM-L6-v2**
+* Persistent ChromaDB vector database
+* Duplicate document detection
+* Fast similarity search
+
+### 💬 AI Chat
+
+* Conversational interface
+* Source citations
+* Page references
+* Confidence scores
+* Conversation history
+
+### 🎁 Bonus Features
+
+* Document summarization
+* Key point extraction
+* Quiz generation
+* Flashcard generation
+* Keyword search
+* Multi-language translation
+* Token usage tracking
+* Cost estimation
+* Copy & download responses
+* Export conversations (Markdown / JSON)
+
+---
+
+# 🏗 System Architecture
+
+```text
+                    User
+                      │
+                      ▼
+             Streamlit Web Interface
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+          ▼                       ▼
+     Upload PDFs             Paste Text
+          │
+          ▼
+   PyMuPDF + OCR Extraction
+          │
+          ▼
+   Recursive Text Splitter
+          │
+          ▼
+ SentenceTransformer Embeddings
+          │
+          ▼
+     Chroma Vector Database
+          │
+          ▼
+   Semantic Similarity Search
+          │
+          ▼
+   Relevant Context Retrieval
+          │
+          ▼
+      Google Gemini API
+          │
+          ▼
+  Context-Aware AI Response
+```
+
+---
+
+# 🧩 Tech Stack
+
+| Category        | Technology                 |
+| --------------- | -------------------------- |
+| Frontend        | Streamlit                  |
+| Framework       | LangChain                  |
+| LLM             | Google Gemini API / OpenAI |
+| Vector Database | ChromaDB                   |
+| Embeddings      | sentence-transformers      |
+| PDF Processing  | PyMuPDF                    |
+| OCR             | Tesseract OCR              |
+| Translation     | Deep Translator            |
+| Language        | Python                     |
+
+---
+
+# 📂 Project Structure
+
+```text
 project/
-├── app.py                 # Main entry point (home page + pipeline bootstrap)
-├── config.py               # Centralized settings loaded from .env
+├── app.py
+├── config.py
 ├── requirements.txt
 ├── .env.example
+├── README.md
+│
 ├── pages/
-│   ├── upload.py            # Dedicated upload & document management page
-│   ├── chat.py               # Dedicated chat + bonus tools page
-│   └── settings.py           # Settings, usage stats, DB management
+│   ├── upload.py
+│   ├── chat.py
+│   └── settings.py
+│
 ├── rag/
-│   ├── loader.py              # PDF/text extraction (+ OCR)
-│   ├── splitter.py            # Chunking with page metadata
-│   ├── embeddings.py          # sentence-transformers wrapper
-│   ├── vector_store.py        # ChromaDB persistence layer
-│   ├── retriever.py            # Similarity search + confidence
-│   ├── llm.py                   # OpenAI / Gemini provider abstraction
-│   └── chain.py                  # RAG orchestration + bonus features
+│   ├── loader.py
+│   ├── splitter.py
+│   ├── embeddings.py
+│   ├── vector_store.py
+│   ├── retriever.py
+│   ├── llm.py
+│   └── chain.py
+│
 ├── utils/
-│   └── helpers.py                  # Session-state & export utilities
-├── data/uploads/                    # Uploaded PDFs are saved here
-└── vector_db/                        # ChromaDB persistent storage
+│   └── helpers.py
+│
+├── data/
+│   └── uploads/
+│
+└── vector_db/
 ```
 
-## 🚀 Setup
+---
 
-1. **Create a virtual environment** (recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # Windows: venv\Scripts\activate
-   ```
+# 🔄 RAG Workflow
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Upload one or more PDF documents.
+2. Extract text using **PyMuPDF**.
+3. Apply OCR when scanned pages are detected.
+4. Split text into overlapping chunks.
+5. Generate vector embeddings using **all-MiniLM-L6-v2**.
+6. Store embeddings inside **ChromaDB**.
+7. User submits a question.
+8. Retrieve the most relevant document chunks.
+9. Send retrieved context to the selected LLM.
+10. Generate an accurate answer with citations.
 
-3. **Configure environment variables**:
-   ```bash
-   cp .env.example .env
-   ```
-   Edit `.env` and set:
-   - `LLM_PROVIDER` to `openai` or `gemini`
-   - `OPENAI_API_KEY` (if using OpenAI) or `GOOGLE_API_KEY` (if using Gemini)
+---
 
-4. **(Optional) Enable OCR** for scanned PDFs — install Tesseract:
-   ```bash
-   # macOS
-   brew install tesseract
-   # Ubuntu/Debian
-   sudo apt-get install tesseract-ocr
-   ```
-   If `tesseract` isn't on your PATH, set `TESSERACT_CMD` in `.env` to its full path.
+# ⚙ Installation
 
-5. **Run the app**:
-   ```bash
-   streamlit run app.py
-   ```
+## 1. Clone Repository
 
-   The first run will download the embedding model (`all-MiniLM-L6-v2`, ~90MB) from Hugging Face — this requires internet access once; it's cached locally afterward.
+```bash
+git clone https://github.com/yourusername/ai-document-assistant.git
+cd ai-document-assistant
+```
 
-## 🧩 How It Works (RAG Pipeline)
+## 2. Create Virtual Environment
 
-1. User uploads a PDF or pastes text
-2. Text is extracted (with OCR fallback for image-based PDFs) and cleaned
-3. Text is split into 1000-character chunks with 200-character overlap
-4. Each chunk is embedded using `all-MiniLM-L6-v2`
-5. Embeddings + metadata (source, page number) are stored in ChromaDB
-6. User asks a question → the question is embedded
-7. ChromaDB performs similarity search to retrieve the top-K most relevant chunks
-8. Retrieved chunks are inserted into a strict prompt template that forbids hallucination
-9. The LLM (OpenAI or Gemini) generates an answer
-10. The answer is displayed with source citations, page numbers, and a confidence score
+```bash
+python -m venv venv
+```
 
-## ⚠️ Troubleshooting
+Windows
 
-| Problem | Likely Cause |
-|---|---|
-| "No API key configured" | Set `OPENAI_API_KEY` or `GOOGLE_API_KEY` in `.env` |
-| "Could not open PDF" | File may be corrupted or password-protected |
-| "No extractable text found" | Scanned PDF with OCR unavailable — install Tesseract |
-| Slow first run | Embedding model is downloading (one-time, ~90MB) |
-| Answers seem ungrounded | Lower temperature, increase Top K, or re-check chunking |
+```bash
+venv\Scripts\activate
+```
 
-## 📝 Notes on Cost Estimates
+Linux / macOS
 
-Token/cost figures shown in the app use approximate public pricing tables and are intended as directional guidance only — refer to your provider's billing dashboard for exact charges.
+```bash
+source venv/bin/activate
+```
+
+---
+
+## 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 4. Configure Environment Variables
+
+Create a `.env` file.
+
+```env
+LLM_PROVIDER=gemini
+
+GOOGLE_API_KEY=your_google_api_key
+
+OPENAI_API_KEY=your_openai_api_key
+```
+
+---
+
+## 5. Run the Application
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# 📦 Core Dependencies
+
+* Streamlit
+* LangChain
+* LangChain Google GenAI
+* ChromaDB
+* Sentence Transformers
+* PyMuPDF
+* pytesseract
+* Pillow
+* Deep Translator
+* Pandas
+* NumPy
+
+---
+
+# 💡 How Retrieval-Augmented Generation Works
+
+```text
+PDF
+ │
+ ▼
+Extract Text
+ │
+ ▼
+Chunk Documents
+ │
+ ▼
+Generate Embeddings
+ │
+ ▼
+Store in ChromaDB
+ │
+ ▼
+User Question
+ │
+ ▼
+Similarity Search
+ │
+ ▼
+Relevant Chunks
+ │
+ ▼
+Gemini / OpenAI
+ │
+ ▼
+Final Answer
+```
+
+---
+
+# ⚠ Troubleshooting
+
+| Problem           | Solution                                                    |
+| ----------------- | ----------------------------------------------------------- |
+| API key missing   | Configure `.env` correctly                                  |
+| Empty PDF         | Ensure the PDF contains readable text                       |
+| Scanned PDF       | Install Tesseract OCR                                       |
+| Slow first launch | Embedding model downloads on first run                      |
+| Weak answers      | Increase retrieval Top-K or upload better-quality documents |
+
+---
+
+# 📈 Future Improvements
+
+* Multi-user authentication
+* Cloud vector database
+* Hybrid semantic + keyword search
+* Streaming AI responses
+* Document versioning
+* Citation highlighting
+* Support for DOCX, PPTX, CSV, and Excel
+* Docker deployment
+* Mobile-responsive UI
+
+---
+
+# 🛠 Skills Demonstrated
+
+* Retrieval-Augmented Generation (RAG)
+* Google Gemini API
+* OpenAI Integration
+* LangChain
+* ChromaDB
+* Vector Embeddings
+* Semantic Search
+* Prompt Engineering
+* Streamlit Development
+* OCR Processing
+* Python Application Development
+
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+# 👨‍💻 Author
+
+**Jaihind Murari**
+
+* GitHub: https://github.com/yourusername
+* LinkedIn: https://linkedin.com/in/your-profile
+
+---
+
+## ⭐ Support
+
+If you found this project useful, please consider giving it a **⭐ Star** on GitHub.
+
+It helps others discover the project and motivates future improvements.

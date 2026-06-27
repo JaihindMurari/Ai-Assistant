@@ -28,6 +28,10 @@ from rag.loader import DocumentLoadError, PDFLoader, load_pasted_text
 from rag.retriever import Retriever
 from rag.splitter import TextSplitter
 from rag.vector_store import VectorStore
+import streamlit as st
+import google.generativeai as genai
+
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 from utils.helpers import (
     add_chat_message,
     format_confidence_label,
